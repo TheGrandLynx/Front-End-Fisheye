@@ -41,6 +41,10 @@ h1 {
     flex-direction: column;
     line-height: 0%;
 }
+.photographer_section a {
+    text-align: center;
+    text-decoration: none;
+}
 
 .photographer_section article h2 {
     color: #D3573C;
