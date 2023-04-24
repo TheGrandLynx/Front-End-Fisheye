@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/photographer.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/8344800ba4.js" crossorigin="anonymous"></script>
     <title>Fisheye - photographe </title>
   </head>
   <body>
@@ -15,23 +16,72 @@
       <div class="photograph-header">
         <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
       </div>
+      <section class="sectionTri">
+        <div>
+          <p>Trier par</p>
+          <div class="dropdown">
+            <button class="bloc-top">
+                <span>Popularité</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="bloc-links">
+                <ul>
+                    <li>Popularité</li>
+                    <li>Date</li>
+                    <li>Titre</li>
+                </ul>
+            </div>
+        </div>
+      </div>
+      </section>
+      
+      <div class="photoListe"></div>
+      <aside class="asideLikesPrice"></aside>
     </main>
-    <div id="contact_modal">
-			<div class="modal">
-				<header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+    <div id="contact_modal" role="dialog" aria-labelledby="contactMe">
+      <div class="modal">
+        <header>
+          <div class="formTitle">
+            <h2 id="contactMe" aria-label="cliquer pour ouvrir le formulaire de contact">Contactez-moi</h2>
+            <span class="namePhotographForm"></span>
+          </div>
+          <img src="./assets/icons/close.svg" onclick="closeModal()" alt="X pour fermer le formulaire"
+            tabindex="0" />
         </header>
-				<form>
-					<div>
-						<label>Prénom</label>
-						<input />
-					</div>
-          <button class="contact_button">Envoyer</button>
-				</form>
-			</div>
-		</div>
+        <form id="contact-form">
+          <div>
+            <label for="first-name">Prénom</label>
+            <input id="first-name" type="text" minlength="2" name="champ prénom" required />
+            <label for="last-name">Nom</label>
+            <input id="last-name" type="text" minlength="2" name="champ nom" required />
+            <label for="email">Email</label>
+            <input id="email" type="email" name="champ email" required />
+            <label for="messageBox">Votre message</label>
+            <textarea id="messageBox" name="zone de message" required></textarea>
+          </div>
+          <button class="contact_button" type="submit">
+            Envoyer
+          </button>
+        </form>
+      </div>
+    </div>
+    <div id="lightbox_modal" role="dialog" class="lightbox_modal" aria-label="Gros plan sur le média sélectionné">
+      <div class="media-container">
+        <img id="lightbox-close" src="./assets/icons/closeLightbox.svg" onclick="closeLightbox()"
+          alt="X pour fermer la lightbox" tabindex="0" />
+        <div class="media_name_container">
+          <figure id="lightbox-media"></figure>
+        </div>
+      </div>
+    </div>
     <script src="/scripts/pages/photographer.js"></script>
+    <script src="scripts/factories/photographer.js"></script>
+    <script src="scripts/factories/lightBox.js"></script>
+    <script src="scripts/factories/media.js"></script>
+    <script src="scripts/factories/likesPrice.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
+    <script src="/scripts/utils/dropDownFilter.js"></script>
+    <script src="/scripts/utils/likes.js"></script>
+    <script src="/scripts/utils/lightBox.js"></script>
   </body>
 </html>
