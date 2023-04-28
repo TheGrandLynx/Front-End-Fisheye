@@ -19,24 +19,13 @@ function mediaFactory(data) {
             img = document.createElement( 'img' );
             img.setAttribute("src", picture)
             img.setAttribute("alt", `Photo  ${title}`)
-            img.addEventListener("click", function(e){
-                //alert(`image : ${image}`);
-                const lightBoxMedia = document.querySelector(".media_name_container");
-                const lightBoxModel = lightBoxFactory(data);
-                const lightBoxCardDOM = lightBoxModel.getLightBoxCardDOM();
-                lightBoxMedia.appendChild(lightBoxCardDOM);
-                displayLightBox();
-
-            })
+            img.setAttribute("id", `${id}`)
+            
             }else {
                 img = document.createElement( 'video' );
                 img.setAttribute("src", picture)
                 img.setAttribute("alt", `Photo  ${title}`)
-                img.addEventListener("click", function(e){
-                    //const target = e.target.closest("#btnPrepend"); // Or any other selector.
-    
-                    alert(`video : ${video}`);
-                })
+                img.setAttribute("id", `${id}`)
             }
         const divPhotoDescription = document.createElement( 'div' );
         const pTitle = document.createElement( 'p' );

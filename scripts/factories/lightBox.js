@@ -11,6 +11,7 @@ function lightBoxFactory(data) {
     function getLightBoxCardDOM() {
         
         const articlePhoto = document.createElement( 'article' );
+        articlePhoto.setAttribute("id", 'idArticle')
         let img ;
         
         if (image){
@@ -19,7 +20,9 @@ function lightBoxFactory(data) {
             img.setAttribute("alt", `Photo  ${title}`)
             }else {
                 img = document.createElement( 'video' );
+                img.controls = true;
                 img.setAttribute("src", picture)
+                img.setAttribute("type", 'video/mp4')
                 img.setAttribute("alt", `Photo  ${title}`)
             }
         

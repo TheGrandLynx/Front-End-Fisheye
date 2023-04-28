@@ -258,7 +258,7 @@ form input {
 }
 
 #lightbox_modal {
-    /* display: none; */
+    display: none;
     justify-content: center;
     align-items: center;
     height: 100%;
@@ -293,10 +293,10 @@ form input {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: purple;
+    
 }
 
-.media_name_container img {
+.media_name_container img, video {
     width: 1050px;
     height: 900px;
     object-fit: cover;
