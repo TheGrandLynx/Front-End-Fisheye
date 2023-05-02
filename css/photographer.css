@@ -162,7 +162,11 @@ form input {
 }
 
 .photoListe article i {
-    color: #901C1C;;
+    color: #901C1C;
+}
+
+.isLiked {
+    filter: brightness(75%);
 }
 
 .sectionTri {

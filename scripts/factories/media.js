@@ -1,6 +1,7 @@
 function mediaFactory(data) {
     const { id, photographerId, title, image,video, likes, date, price } = data;
     let picture;
+    let isLiked = false;
     if (image){
         
     picture = `assets/images/${photographerId}/${image}`;
@@ -32,6 +33,27 @@ function mediaFactory(data) {
         pTitle.innerHTML = `${title}`
         const pLikes = document.createElement( 'p' );
         pLikes.innerHTML = `${likes} <i class="fa-solid fa-heart"></i>`
+        pLikes.addEventListener("click", function(e){
+            const divLikesPrice = document.getElementById('divLikesPrice');
+            divLikesPrice.remove();
+            currentLikes +=1;
+            const asideLikesPrice = document.querySelector(".asideLikesPrice");
+    const likesPriceModel = likesPriceFactory(currentPhotographer);
+    const likesPriceDOM = likesPriceModel.getLikesPriceDom();
+    asideLikesPrice.appendChild(likesPriceDOM);
+    console.log(currentLikes)
+            let wNumber = pLikes.innerHTML.split(' ');
+            console.log(Number(wNumber[0])+1);
+            if(isLiked){
+                isLiked=false;
+                pLikes.innerHTML = `${Number(wNumber[0])-1} <i class="fa-solid fa-heart"></i>`
+                pLikes.classList.remove('isLiked');
+            }else{
+                isLiked = true;
+                pLikes.innerHTML = `${Number(wNumber[0])+1} <i class="fa-solid fa-heart"></i>`
+                pLikes.classList.add('isLiked');
+            }
+        });
         divPhotoDescription.appendChild(pTitle);
         divPhotoDescription.appendChild(pLikes);
         articlePhoto.appendChild(img);

@@ -2,7 +2,8 @@ function closeLightbox() {
     const lightBoxModal = document.getElementById("lightbox_modal");
     const articleLightbox = document.getElementById("idArticle");
     articleLightbox.remove();
-    document.removeEventListener('keyup', function(e){});
+    console.log('remove');
+    document.removeEventListener('keyup', function(keyboardevent){});
     lightBoxModal.style.display = "none"; 
 
 }
