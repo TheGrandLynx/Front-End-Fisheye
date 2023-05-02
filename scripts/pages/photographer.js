@@ -5,7 +5,7 @@ const urlParams = new URLSearchParams(photographerUrl);
 const photographerId = urlParams.get("id");
 let currentMedias;
 let currentLightbox;
-let currentLikes;
+var currentLikes;
 
 async function getPhotographers() {
     // Ceci est un exemple de données pour avoir un affichage de photographes de test dès le démarrage du projet, 
@@ -84,7 +84,7 @@ async function displayMedias(currentMedias) {
 
 async function displayLikesPrice(currentPhotographer, currentMedias) {
     const asideLikesPrice = document.querySelector(".asideLikesPrice");
-    const likesPriceModel = likesPriceFactory(currentPhotographer, currentMedias);
+    const likesPriceModel = likesPriceFactory(currentPhotographer);
     const likesPriceDOM = likesPriceModel.getLikesPriceDom();
     asideLikesPrice.appendChild(likesPriceDOM);
 }
@@ -155,6 +155,7 @@ function addLightboxListeners(){
         }
       })
 }
+ 
 
 async function init() {
     // Récupère les datas des photographes
@@ -169,7 +170,9 @@ async function init() {
      }
     displayMedias(currentMedias);
     console.log(currentPhotographer, currentMedias);
+    currentLikes = getTotalLikes(currentMedias);
     displayLikesPrice(currentPhotographer, currentMedias);
+    console.log('listeners');
      addlisteners();
 };
 
