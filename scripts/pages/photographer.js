@@ -155,7 +155,37 @@ function addLightboxListeners(){
         }
       })
 }
- 
+let isSortOpen = false;
+function addSortListeners(){
+    const selectSort = document.querySelector(".sortSelect");
+    selectSort.addEventListener('click', function (e) {
+        e.preventDefault();
+        console.log('select')
+        if (isSortOpen) {
+            selectSort.size = 1;
+            selectSort.classList.remove('sortSelectSelected')
+            isSortOpen = false;
+            
+        }else {
+
+            selectSort.size = 3;
+            selectSort.classList.add('sortSelectSelected')
+            isSortOpen = true;
+        }
+    })
+    selectSort.addEventListener("change", function () {
+        removeArticlePhoto();
+        const strSelectedSort =  selectSort.options[selectSort.selectedIndex].text
+        const sortedMedias = sort(currentMedias, strSelectedSort)
+        displayMedias(sortedMedias);
+    });
+}
+
+function removeArticlePhoto(){
+    
+    const mediaSection = document.querySelector(".photoListe");
+    mediaSection.replaceChildren();
+}
 
 async function init() {
     // Récupère les datas des photographes
@@ -174,6 +204,7 @@ async function init() {
     displayLikesPrice(currentPhotographer, currentMedias);
     console.log('listeners');
      addlisteners();
+     addSortListeners();
 };
 
 init();

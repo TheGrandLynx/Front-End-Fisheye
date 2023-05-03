@@ -305,3 +305,43 @@ form input {
     height: 900px;
     object-fit: cover;
 }
+
+.custom-select {
+    position: absolute;
+    left: 200px;
+    
+}
+
+
+  .select-selected {
+    background-color: DodgerBlue;
+  }
+.sortSelect{
+    width: 170px;
+    height: 50px;
+    font-size: 18px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    background: #901C1C;
+}
+.sortSelectSelected{
+    height: 170px;
+}
+
+.sortSelect option {
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    
+}
+
+.select-selected:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+  }
