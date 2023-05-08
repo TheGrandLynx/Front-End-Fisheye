@@ -1,16 +1,18 @@
+
+//factory pour la création des éléments DOM du photographe,
+//les cards de chaque photographe dans la page index
+//le header du photographe dans la page photographer 
 function photographerFactory(data) {
     const { name, portrait, id, city, country, tagline, price } = data;
-
     const picture = `assets/photographers/${portrait}`;
-
     function getUserCardDOM() {
         const link = document.createElement('a');
         link.href = "/photographer.html?id=" + id ;
-        link.setAttribute("role", "link");
+        link.setAttribute("aria-label", `Lien vers le profil de ${name}`);
         const article = document.createElement( 'article' );
         const img = document.createElement( 'img' );
         img.setAttribute("src", picture)
-        img.setAttribute("alt", `Photo de profil de ${name}`)
+        img.setAttribute("alt", `${name}`)
         const h2 = document.createElement( 'h2' );
         h2.textContent = name;
         const p1 = document.createElement('p');
@@ -28,19 +30,17 @@ function photographerFactory(data) {
         return (article);
     }
 
-    function getUserHeaderCardDOM(){
-        
+    function getUserHeaderCardDOM(){        
         const article = document.createElement( 'article' );
         const img = document.createElement( 'img' );
         img.setAttribute("src", picture)
-        img.setAttribute("alt", `Photo de profil de ${name}`)
+        img.setAttribute("alt", `${name}`)
         const h1 = document.createElement( 'h1' );
         h1.textContent = name;
         const p1 = document.createElement('p');
         const p2 = document.createElement('p');
         p1.innerHTML = `${city}, ${country}`
-        p2.innerHTML = `${tagline}`
-        
+        p2.innerHTML = `${tagline}`        
         article.appendChild(h1);
         article.appendChild(p1);
         article.appendChild(p2);

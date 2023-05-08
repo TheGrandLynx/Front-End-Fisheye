@@ -2,17 +2,39 @@
 // Fonction pour trier les médias
 function sort(medias, option) {
     switch (option) {
-      // On trie les médias en fonction de l'option choisie
       case 'Popularité':
-        // On trie les médias par ordre décroissant de likes
         return medias.sort((a, b) => b.likes - a.likes)
       case 'Date':
-        // On trie les médias par ordre croissant de date
         return medias.sort((a, b) => new Date(a.date) - new Date(b.date))
       case 'Titre':
-        // On trie les médias par ordre alphabétique
         return medias.sort((a, b) => a.title.localeCompare(b.title))
       default:
         return medias
     }
   }
+
+  
+function init(){
+  document.querySelector('.sortSelect').addEventListener('focus', function(e){
+    document.querySelector('.sortSelect').classList.toggle('sortSelectActive');
+  })
+  document.querySelector('.sortSelect').addEventListener('focusout', function(e){
+    document.querySelector('.sortSelect').classList.toggle('sortSelectActive');
+  })
+  let sortCategory = ['Popularité', 'Date', 'Titre'];
+  const sortSelect = document.querySelector('.sortSelect');
+  for(let i = 0; i < sortCategory.length; i++){
+    const optSelect = document.createElement('option');
+    optSelect.setAttribute('value', i);
+    const itmTextNode = document.createTextNode(sortCategory[i]);
+    optSelect.appendChild(itmTextNode);
+    if(i!=0){
+      const hrSelect = document.createElement('hr');
+      sortSelect.appendChild(hrSelect);
+    }
+    sortSelect.appendChild(optSelect);
+  }
+}
+
+init();
+  

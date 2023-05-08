@@ -8,79 +8,57 @@ let currentLightbox;
 var currentLikes;
 
 async function getPhotographers() {
-    // Ceci est un exemple de données pour avoir un affichage de photographes de test dès le démarrage du projet, 
-        // mais il sera à remplacer avec une requête sur le fichier JSON en utilisant "fetch".
-        
-        console.log('Début')
         const promesse = await fetch('/data/photographers.json');
         const wPhotographers = await promesse.json();
-        const photographers = wPhotographers['photographers']
-        
-        for (let i = 0; i < photographers.length; i++) {
-            console.log(photographers[i].name + photographers[i].id);
-         }
-            
-            
-         
-        console.log('Fin');	
-        // et bien retourner le tableau photographers seulement une fois récupéré
-        return ({
-            photographers: [...photographers]})
+        const photographers = wPhotographers['photographers'];
+        return ({photographers: [...photographers]})
 }
 
 async function getMedias() {
-    // Ceci est un exemple de données pour avoir un affichage de photographes de test dès le démarrage du projet, 
-        // mais il sera à remplacer avec une requête sur le fichier JSON en utilisant "fetch".
-        
         const promesse = await fetch('/data/photographers.json');
         const wMedias = await promesse.json();
-        const medias = wMedias['media']
-        
-        console.log('medias'+medias);
-        return ({
-            medias: [...medias]})
+        const medias = wMedias['media'];
+        return ({medias: [...medias]})
 }
 
 
-async function displayData(currentPhotographer) {
-    
+async function displayData(currentPhotographer) {    
     const photographersSection = document.querySelector(".photograph-header");
-    console.log('test'+currentPhotographer['name']);
     const wPhotographerFactory = photographerFactory(currentPhotographer);
     // pour le header
     const sphotographerFactory = wPhotographerFactory.getUserHeaderCardDOM();
     Object.values(sphotographerFactory).forEach((value) => {
         photographersSection.append(value);
-    });
-    
+    });    
 };
 
-async function displayMedias(currentMedias) {
-    
+async function displayMedias(currentMedias) {    
     const mediaSection = document.querySelector(".photoListe");
-    console.log('test'+currentMedias['title']);
-    
-
-
-        currentMedias.forEach((media) => {
-            const photoModel = mediaFactory(media);
-            const photoCardDOM = photoModel.getImageCardDOM();
-            mediaSection.appendChild(photoCardDOM);
-            console.log('media'+media['id'])
-            const img = document.getElementById(media['id']);
-            console.log('img'+img)
-            img.addEventListener("click", function(e){
-                //alert(`image : ${image}`);
-                currentLightbox = media;
-                const lightBoxMedia = document.querySelector(".media_name_container");
-                const lightBoxModel = lightBoxFactory(media);
-                const lightBoxCardDOM = lightBoxModel.getLightBoxCardDOM();
-                lightBoxMedia.appendChild(lightBoxCardDOM);
-                displayLightBox();
-                addLightboxListeners();
-            })
-        });
+    currentMedias.forEach((media) => {
+        const photoModel = mediaFactory(media);
+        const photoCardDOM = photoModel.getImageCardDOM();
+        mediaSection.appendChild(photoCardDOM);
+        const img = document.getElementById(media['id']);
+        img.addEventListener("click", function(e){
+            openLightbox(media);
+        })
+        img.addEventListener("keyup", function(e){
+            if (e.code === 'Enter' && document.getElementById('main').getAttribute('aria-hidden') == 'false') {
+                openLightbox(media);
+            }
+        })
+    });
 };
+
+function openLightbox(media){
+    currentLightbox = media;
+    const lightBoxMedia = document.querySelector(".media_name_container");
+    const lightBoxModel = lightBoxFactory(media);
+    const lightBoxCardDOM = lightBoxModel.getLightBoxCardDOM();
+    lightBoxMedia.appendChild(lightBoxCardDOM);
+    displayLightBox();
+    addLightboxListeners();
+}
 
 async function displayLikesPrice(currentPhotographer, currentMedias) {
     const asideLikesPrice = document.querySelector(".asideLikesPrice");
@@ -91,98 +69,74 @@ async function displayLikesPrice(currentPhotographer, currentMedias) {
 
 function addlisteners(){
     const lightboxNext = document.getElementById('lightbox-next')
-    console.log('lightbox'+lightboxNext)
     lightboxNext.addEventListener("click", function(e){
         gotoNextLightbox();
     });
-
-    const lightboxPrev = document.getElementById('lightbox-prev')
-    
-    lightboxPrev.addEventListener("click", function(e){
-        
+    const lightboxPrev = document.getElementById('lightbox-prev')    
+    lightboxPrev.addEventListener("click", function(e){        
         gotoPrevLightbox();
     });
 }
 
 function gotoNextLightbox(){
     let nextLightboxId = currentMedias.findIndex(media => media.id == currentLightbox.id);
-        if(nextLightboxId == currentMedias.length-1){
-            
+        if(nextLightboxId == currentMedias.length-1){            
             nextLightboxId = 0;
         }else{
             nextLightboxId +=1;
         }
         const articleLightbox = document.getElementById("idArticle");
         articleLightbox.remove();
-                const lightBoxMedia = document.querySelector(".media_name_container");
-                console.log(nextLightboxId);
-                const lightBoxModel = lightBoxFactory(currentMedias[nextLightboxId]);
-                const lightBoxCardDOM = lightBoxModel.getLightBoxCardDOM();
-                lightBoxMedia.appendChild(lightBoxCardDOM);
-                //displayLightBox();
-                currentLightbox = currentMedias[nextLightboxId];
+        const lightBoxMedia = document.querySelector(".media_name_container");
+        const lightBoxModel = lightBoxFactory(currentMedias[nextLightboxId]);
+        const lightBoxCardDOM = lightBoxModel.getLightBoxCardDOM();
+        lightBoxMedia.appendChild(lightBoxCardDOM);
+        currentLightbox = currentMedias[nextLightboxId];
 }
 
 function gotoPrevLightbox(){
-    let prevLightboxId = currentMedias.findIndex(media => media.id == currentLightbox.id)
-        if(prevLightboxId == 0){
-            
-            prevLightboxId = currentMedias.length-1;
-        }else{
-            prevLightboxId -=1;
-        }
-        const articleLightbox = document.getElementById("idArticle");
-        articleLightbox.remove();
-                const lightBoxMedia = document.querySelector(".media_name_container");
-                
-                const lightBoxModel = lightBoxFactory(currentMedias[prevLightboxId]);
-                const lightBoxCardDOM = lightBoxModel.getLightBoxCardDOM();
-                lightBoxMedia.appendChild(lightBoxCardDOM);
-                //displayLightBox();
-                currentLightbox = currentMedias[prevLightboxId];
+    let prevLightboxId = currentMedias.findIndex(media => media.id == currentLightbox.id);
+    if(prevLightboxId == 0){            
+        prevLightboxId = currentMedias.length-1;
+    }else{
+        prevLightboxId -=1;
+    }
+    const articleLightbox = document.getElementById("idArticle");
+    articleLightbox.remove();
+    const lightBoxMedia = document.querySelector(".media_name_container");                
+    const lightBoxModel = lightBoxFactory(currentMedias[prevLightboxId]);
+    const lightBoxCardDOM = lightBoxModel.getLightBoxCardDOM();
+    lightBoxMedia.appendChild(lightBoxCardDOM);
+    currentLightbox = currentMedias[prevLightboxId];
 }
 
 function addLightboxListeners(){
     document.addEventListener('keyup', function (e) {
-        if (e.code === 'ArrowLeft') {
-          gotoPrevLightbox();
+        if(lightBoxModal.getAttribute('aria-hidden') == 'false'){
+            if (e.code === 'ArrowLeft') {
+            gotoPrevLightbox();
+            }
+            if (e.code === 'ArrowRight') {
+            gotoNextLightbox();
+            }
+            if (e.code === 'Escape') {
+            closeLightbox();
+            }
         }
-        if (e.code === 'ArrowRight') {
-          gotoNextLightbox();
-        }
-        if (e.code === 'Escape') {
-          closeLightbox();
-        }
-      })
+      });
 }
-let isSortOpen = false;
+
 function addSortListeners(){
     const selectSort = document.querySelector(".sortSelect");
-    selectSort.addEventListener('click', function (e) {
-        e.preventDefault();
-        console.log('select')
-        if (isSortOpen) {
-            selectSort.size = 1;
-            selectSort.classList.remove('sortSelectSelected')
-            isSortOpen = false;
-            
-        }else {
-
-            selectSort.size = 3;
-            selectSort.classList.add('sortSelectSelected')
-            isSortOpen = true;
-        }
-    })
     selectSort.addEventListener("change", function () {
         removeArticlePhoto();
-        const strSelectedSort =  selectSort.options[selectSort.selectedIndex].text
-        const sortedMedias = sort(currentMedias, strSelectedSort)
-        displayMedias(sortedMedias);
+        const strSelectedSort =  selectSort.options[selectSort.selectedIndex].text;
+        currentMedias = sort(currentMedias, strSelectedSort);
+        displayMedias(currentMedias);
     });
 }
 
-function removeArticlePhoto(){
-    
+function removeArticlePhoto(){    
     const mediaSection = document.querySelector(".photoListe");
     mediaSection.replaceChildren();
 }
@@ -194,17 +148,11 @@ async function init() {
     displayData(currentPhotographer);
     const { medias } = await getMedias();
     currentMedias = medias.filter(media => media.photographerId == photographerId);
-    console.log(currentMedias.length)
-    for (let i = 0; i < currentMedias.length; i++) {
-        console.log(currentMedias[i].photographerId + currentMedias[i].title + currentMedias[i].likes);
-     }
     displayMedias(currentMedias);
-    console.log(currentPhotographer, currentMedias);
     currentLikes = getTotalLikes(currentMedias);
     displayLikesPrice(currentPhotographer, currentMedias);
-    console.log('listeners');
-     addlisteners();
-     addSortListeners();
+    addlisteners();
+    addSortListeners();
 };
 
 init();
