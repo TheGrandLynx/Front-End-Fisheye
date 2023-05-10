@@ -197,56 +197,6 @@ form input {
     font-weight: 700;
 }
 
-.dropdown {
-    position: absolute;
-    left: 200px;
-    max-width: 170px;
-    height: 50px;
-    border-radius: 5px;
-    color: #FFFFFF;
-    background: #901C1C;
-    transition: height 0.4s ease-in-out;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-}
-
-.bloc-top {
-    padding: 20px;
-    width: 100%;
-    border: none;
-    outline: none;
-    font-size: 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 25px;
-    background: #901C1C;
-    color: #FFFFFF;
-    cursor: pointer;
-    border-radius:  5px;
-}
-
-
-.bloc-top img {
-    width: 20px
-}
-
-
-
-.bloc-links ul {
-    padding: 0px;
-    margin: 0px;
-    font-size: 18px;
-}
-
-.bloc-links li {
-    list-style-type: none;
-    padding: 10px 0 10px 20px;
-    border-bottom: #FFFFFF solid 1px;
-    font-size: 18px;
-}
-.bloc-links li:last-child {
-    border-bottom: none;
-}
 
 .asideLikesPrice {
     position: fixed;
@@ -351,7 +301,7 @@ form input {
 	-o-appearance: none;
 	appearance: none;
 	background-image: url('/assets/icons/test.svg');
-	background-position: 98% 5%;
+	background-position: 92% 10%;
 	background-repeat: no-repeat;
 	outline: none;
     
