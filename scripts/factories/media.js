@@ -29,7 +29,8 @@ function mediaFactory(data) {
         pTitle.innerHTML = `${title}`;
         const pLikes = document.createElement( 'p' );
         pLikes.setAttribute("tabindex", `0`);
-        pLikes.innerHTML = `${likes} <i class="fa-solid fa-heart"></i>`;        
+        pLikes.innerHTML = `${likes} <i class="fa-solid fa-heart"></i>`; 
+        pLikes.setAttribute("aria-label", `likes`);
         divPhotoDescription.appendChild(pTitle);
         divPhotoDescription.appendChild(pLikes);
         articlePhoto.appendChild(img);
